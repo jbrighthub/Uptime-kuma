@@ -1,0 +1,156 @@
+api-version: 2021-12-25
+location: westeurope
+name: uptime-kuma
+properties:
+  containers:
+  - name: nginx-with-ssl
+    properties:
+      image: mcr.microsoft.com/oss/nginx/nginx:1.15.5-alpine
+      ports:
+      - port: 443
+        protocol: TCP
+      resources:
+        requests:
+          cpu: 1.0
+          memoryInGB: 1.5
+      volumeMounts:
+      - name: nginx-config
+        mountPath: /etc/nginx
+  - name: uptime-kuma-app
+    properties:
+      image: louislam/uptime-kuma:1.11.1
+      ports:
+      - port: 3001
+        protocol: TCP
+      resources:
+        requests:
+          cpu: 1.0
+          memoryInGB: 1.5
+      volumeMounts:
+      - name: uptime-kuma
+        mountPath: /app/data
+        name: nginx-config1
+
+  volumes:
+  - name: nginx-config1
+    azureFile:
+      sharename: fileshareforaci
+      storageAccountName: storageforaci1
+      storageAccountKey: es15CMggUMRwN5OiFqmGwqRG0PL/eFiuQ2POl7amj78eUj+UJIw8opRNvOro2q7e5ZLnNv8K1nI8+AStUArUxQ==
+  - secret:
+      ssl.crt: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSURFVENDQWZrQ0ZFME1wRjVxTTlHa1JDcVV4
+               VFlrQytWaGM0Ti9NQTBHQ1NxR1NJYjNEUUVCQ3dVQU1FVXgKQ3pBSkJnTlZCQVlUQWtGVk1STXdF
+               UVlEVlFRSURBcFRiMjFsTFZOMFlYUmxNU0V3SHdZRFZRUUtEQmhKYm5SbApjbTVsZENCWGFXUm5h
+               WFJ6SUZCMGVTQk1kR1F3SGhjTk1qUXdOREk1TVRBd016VTBXaGNOTWpVd05ESTVNVEF3Ck16VTBX
+               akJGTVFzd0NRWURWUVFHRXdKQlZURVRNQkVHQTFVRUNBd0tVMjl0WlMxVGRHRjBaVEVoTUI4R0Ex
+               VUUKQ2d3WVNXNTBaWEp1WlhRZ1YybGtaMmwwY3lCUWRIa2dUSFJrTUlJQklqQU5CZ2txaGtpRzl3
+               MEJBUUVGQUFPQwpBUThBTUlJQkNnS0NBUUVBbUlWQlRaTDd3OHFtZ2NZa01NMzFEZWwvVzVUdk0y
+               V1RRR1NtNXhLYnV5T3gra1hWCjVSYnpXTHIrWlU1OTZEOE9RREZLMExQL0Z5elFiN3ByRnd4bWly
+               OGdrMVBHRFJSc1RyekE3YWMrcDhuOThiZHQKQ0puTjZVdHFrbHdUL3FhQ01Ya3p6WWtxSmRhZ0JV
+               a015SlBSMVhHWGRiOWFRMU1ZRGdpKzB2TGZ1c3pXa3lTSApJY3oyZDVLeit1Njdnb2ZKUStvNXlF
+               Ync5NjMvV2FsT2syR0dLRGtRT3NlblkrYmZGdDhnSVlnRHpDWUwvczlNCnJtU0pzNXBEam0yTUJP
+               Lys5UlVQUEgyTTc3SHBYU0o2WDNFbE5IdjNWR2RNRTNGMC80RzV4aWJOSUFiNkV1bDAKWFdwU3dt
+               c3NGaVRkOUI2VnY1SlFhN1IrNlQ2aVQrWk83a3hUelFJREFRQUJNQTBHQ1NxR1NJYjNEUUVCQ3dV
+               QQpBNElCQVFBWnFKRUxrc2hZYURMV3lwMld2ZHlENjhYWXBCMUVFOEhZcGJzNi9FN2h6aXhvU1hz
+               MEN5RWlzeTJyCjlqNU8wOG5XQWFGQXJIUHp6ZHVwczI2WjBHdGM3N0tFcXRVaHd6Q0VHZVp2S0FV
+               L0RmbTc4N0dJWjN2UlR6ZmoKU1NMRzAvblJSZlVtNDFReFF4b3BiT0NqNGRmblgxWlNHN3hWa1FS
+               TDhJT0lRbHNOVklGTDBrN2VRbmJzS0RWMApPWHpXRTZ6NkFTYWR5TkgyaGk4VkFKVEdUM3FUZi9t
+               aWNueFRDeUZFWEkyWEUydS82V3JxZ2tFa3FSRzBWVmZsCm5tRnMzeVFpL3hhbkVEMDZYNUJLY1Zv
+               REFqU0FpcGxkRHo0U0JtVU5BS0N0SWxpY3ljb0FINElKZlVoYnpXVlYKTEZ6cHp1akJicnU3STF3
+               S2toeXFhTUpHVUtScgotLS0tLUVORCBDRVJUSUZJQ0FURS0tLS0tCg==
+      ssl.key: LS0tLS1CRUdJTiBQUklWQVRFIEtFWS0tLS0tCk1JSUV2UUlCQURBTkJna3Foa2lHOXcwQkFRRUZB
+               QVNDQktjd2dnU2pBZ0VBQW9JQkFRQ1loVUZOa3Z2RHlxYUIKeGlRd3pmVU42WDlibE84elpaTkFa
+               S2JuRXB1N0k3SDZSZFhsRnZOWXV2NWxUbjNvUHc1QU1VclFzLzhYTE5Cdgp1bXNYREdhS3Z5Q1RV
+               OFlORkd4T3ZNRHRwejZueWYzeHQyMEltYzNwUzJxU1hCUCtwb0l4ZVRQTmlTb2wxcUFGClNReklr
+               OUhWY1pkMXYxcERVeGdPQ0w3Uzh0KzZ6TmFUSkljaHpQWjNrclA2N3J1Q2g4bEQ2am5JUnZEM3Jm
+               OVoKcVU2VFlZWW9PUkE2eDZkajV0OFczeUFoaUFQTUpndit6MHl1Wkltem1rT09iWXdFNy83MUZR
+               ODhmWXp2c2VsZApJbnBmY1NVMGUvZFVaMHdUY1hUL2dibkdKczBnQnZvUzZYUmRhbExDYXl3V0pO
+               MzBIcFcva2xCcnRIN3BQcUpQCjVrN3VURlBOQWdNQkFBRUNnZ0VBQU5taTVneEx5bHhMZ3hwRTc1
+               SzB0K0FJbldaZU9QWFJlNXBObjNXQnkxQlkKVWxJYklaeXJQTVo2RGxXQStGd2lhdWFWQ1huRnhW
+               Um1IanJwcmhtQ1M1MFc2bjZEV012cTJLSG9ncGRvOVg4UgpiOHhocEUzdVhmNmlIdkNIRFRRNC92
+               VUFGOUhsbTR2Sk5zR0hMdEE3VVgzQmY2dWZGSzM4L2RZOEN0ekZnZUZXCnozUmZQbit0Yko4M3JO
+               UWtDRnlHUDdOd3B0OTU4MGUwRjA0cTNQN0dDOGlHeXo1cGFtb2FtMXAwdEE5L1FzU08KNHZ0ZS9G
+               ZjZLblYrWkM5ME5zQURwLzhOY3VnUFNReHBNK0dSS09VclRkTGpZWXNNWkl1SW5WM05oYXg2N3N4
+               OQpHZ2dOZ0I4VlZZZm8vNEIvTzdNZU50eHRKcmxwTW9NdW02WmthQmFORHdLQmdRREx3N3ZjMk5T
+               OXNGb0NBYmEzClBoYjE3MWs3eUFyY1FkU0RjSC9Wd2FDVnVxVy9hUElNVVJRSWFrQXI3amhIUzZv
+               YzIwdmpsU2pNam5wVWpPNG4KK2NiZUJnTjhWL0dKODU5cmlGOCsvYlNoR1JmNXY4Y3VrbWtYQjdM
+               bmhUMGFpT25nSkF3UVN3emlEbjBhSFVBTQpzZkJrU3hrZ3V0TnVhd1FObi9HZTVGSUZud0tCZ1FD
+               L25wTnFITi9qV2hRZHB6YitHVTFKdnlvNEJIMWc2c3EzCnJxekFyVWxhMXJhNHhLZk5YMFEyU3VM
+               a0pBaXBMeit5b2ROMndQV1ZMS2JOR2lKQmZkeGpKc2FPcFlvZ0Q5WlQKMis2VkhDQ1hDSXR4SHBk
+               VWhWdnVEUm1JcjhiZEVyZjU5bmNmYVh3cWl4emM2ZVo1aFgyblJlbUQwaCtQWS9hbwoyUVd0WThk
+               M0V3S0JnQkgrNjJ5SnllQW0zd3dtVXBqRVp3cTVaTXdlMHJhNUthZWlHK2dvL2FHN3BqL05hUE1s
+               CmhmdG9SdHFhWTJZSWpMR1h2SkFROEZXQWo5VS96UmpDdW9tSlJtMkk1dEFrTUFRek94WTVHZWJR
+               YkltbUlsVSsKb1FGanNLMDUyemVvdDk4UHovRHdiK2JYR0wxaHIvSnZGS2dHNmVVMkdzNDVyVlgy
+               dGtRdUxnQkpBb0dBYTF3Kwp2Zkpsb3ExQ25nYWxNaU1kQVpmQTROZnJJNVVKZFhiQnhjYVJWZnI5
+               TDNMSGpiSzF0akdwQkNnSVRqcHgxdlVDClZRUHgxTjNLcXhuY1haTldHcHVNSGpvenRKa0svYnM0
+               NW9SMjRnaGdrRVdTaGtHZDZ6ZWR1YzY2ZmZ6UjVaUW8KMUFtM0R1TVlqZEhqVnV6ckpRQnZ3SExI
+               U2dDNUg0dFF1Z0F3cnM4Q2dZRUFpcUcvMEt3cmJBTmx4NjB6cDM3TQpVM0hDU1JHMjJ2dXF5Wm1S
+               YTZGS2xqTUNqRHo3Q0dGMVU3VU4xUW1XV25qZUhNMUJTdWplTlNGemRxNDdOTTMwClh6VHJudUFu
+               QWlnUFVLMGxndjdpb2FIM3RIdzhWWFZNQnpuZjdmTFlXekVxODVpNW5nMTBzdHZhTlJqWXRqRTEK
+               cHFiUVJOanZ1S0NoVUlXTmEzRjRyM1U9Ci0tLS0tRU5EIFBSSVZBVEUgS0VZLS0tLS0K
+      nginx.conf: IyBuZ2lueCBDb25maWd1cmF0aW9uIEZpbGUKIyBodHRwczovL3dpa2kubmdpbngub3JnL0NvbmZp
+                  Z3VyYXRpb24KCiMgUnVuIGFzIGEgbGVzcyBwcml2aWxlZ2VkIHVzZXIgZm9yIHNlY3VyaXR5IHJl
+                  YXNvbnMuCnVzZXIgbmdpbng7Cgp3b3JrZXJfcHJvY2Vzc2VzIGF1dG87CgpldmVudHMgewogICAg
+                  d29ya2VyX2Nvbm5lY3Rpb25zIDEwMjQ7Cn0KCnBpZCAgICAgICAgL3Zhci9ydW4vbmdpbngucGlk
+                  OwoKaHR0cCB7CgogICAgI1JlZGlyZWN0IHRvIGh0dHBzLCB1c2luZyAzMDcgaW5zdGVhZCBvZiAz
+                  MDEgdG8gcHJlc2VydmUgcG9zdCBkYXRhCgogICAgc2VydmVyIHsKICAgICAgICBsaXN0ZW4gNDQz
+                  IHNzbCBodHRwMjsKCiAgICAgICAgc2VydmVyX25hbWUgbG9jYWxob3N0OwoKICAgICAgICAjIFBy
+                  b3RlY3QgYWdhaW5zdCB0aGUgQkVBU1QgYXR0YWNrIGJ5IG5vdCB1c2luZyBTU0x2MyBhdCBhbGwu
+                  IElmIHlvdSBuZWVkIHRvIHN1cHBvcnQgb2xkZXIgYnJvd3NlcnMgKElFNikgeW91IG1heSBuZWVk
+                  IHRvIGFkZAogICAgICAgICMgU1NMdjMgdG8gdGhlIGxpc3Qgb2YgcHJvdG9jb2xzIGJlbG93Lgog
+                  ICAgICAgIHNzbF9wcm90b2NvbHMgICAgICAgICAgICAgIFRMU3YxLjI7CgogICAgICAgICMgQ2lw
+                  aGVycyBzZXQgdG8gYmVzdCBhbGxvdyBwcm90ZWN0aW9uIGZyb20gQmVhc3QsIHdoaWxlIHByb3Zp
+                  ZGluZyBmb3J3YXJkaW5nIHNlY3JlY3ksIGFzIGRlZmluZWQgYnkgTW96aWxsYSAtIGh0dHBzOi8v
+                  d2lraS5tb3ppbGxhLm9yZy9TZWN1cml0eS9TZXJ2ZXJfU2lkZV9UTFMjTmdpbngKICAgICAgICBz
+                  c2xfY2lwaGVycyAgICAgICAgICAgICAgICBFQ0RIRS1SU0EtQUVTMTI4LUdDTS1TSEEyNTY6RUNE
+                  SEUtRUNEU0EtQUVTMTI4LUdDTS1TSEEyNTY6RUNESEUtUlNBLUFFUzI1Ni1HQ00tU0hBMzg0OkVD
+                  REhFLUVDRFNBLUFFUzI1Ni1HQ00tU0hBMzg0OkRIRS1SU0EtQUVTMTI4LUdDTS1TSEEyNTY6REhF
+                  LURTUy1BRVMxMjgtR0NNLVNIQTI1NjprRURIK0FFU0dDTTpFQ0RIRS1SU0EtQUVTMTI4LVNIQTI1
+                  NjpFQ0RIRS1FQ0RTQS1BRVMxMjgtU0hBMjU2OkVDREhFLVJTQS1BRVMxMjgtU0hBOkVDREhFLUVD
+                  RFNBLUFFUzEyOC1TSEE6RUNESEUtUlNBLUFFUzI1Ni1TSEEzODQ6RUNESEUtRUNEU0EtQUVTMjU2
+                  LVNIQTM4NDpFQ0RIRS1SU0EtQUVTMjU2LVNIQTpFQ0RIRS1FQ0RTQS1BRVMyNTYtU0hBOkRIRS1S
+                  U0EtQUVTMTI4LVNIQTI1NjpESEUtUlNBLUFFUzEyOC1TSEE6REhFLURTUy1BRVMxMjgtU0hBMjU2
+                  OkRIRS1SU0EtQUVTMjU2LVNIQTI1NjpESEUtRFNTLUFFUzI1Ni1TSEE6REhFLVJTQS1BRVMyNTYt
+                  U0hBOkFFUzEyOC1HQ00tU0hBMjU2OkFFUzI1Ni1HQ00tU0hBMzg0OkVDREhFLVJTQS1SQzQtU0hB
+                  OkVDREhFLUVDRFNBLVJDNC1TSEE6QUVTMTI4OkFFUzI1NjpSQzQtU0hBOkhJR0g6IWFOVUxMOiFl
+                  TlVMTDohRVhQT1JUOiFERVM6ITNERVM6IU1ENTohUFNLOwogICAgICAgIHNzbF9wcmVmZXJfc2Vy
+                  dmVyX2NpcGhlcnMgIG9uOwoKICAgICAgICAjIE9wdGltaXplIFRMUy9TU0wgYnkgY2FjaGluZyBz
+                  ZXNzaW9uIHBhcmFtZXRlcnMgZm9yIDEwIG1pbnV0ZXMuIFRoaXMgY3V0cyBkb3duIG9uIHRoZSBu
+                  dW1iZXIgb2YgZXhwZW5zaXZlIFRMUy9TU0wgaGFuZHNoYWtlcy4KICAgICAgICAjIFRoZSBoYW5k
+                  c2hha2UgaXMgdGhlIG1vc3QgQ1BVLWludGVuc2l2ZSBvcGVyYXRpb24sIGFuZCBieSBkZWZhdWx0
+                  IGl0IGlzIHJlLW5lZ290aWF0ZWQgb24gZXZlcnkgbmV3L3BhcmFsbGVsIGNvbm5lY3Rpb24uCiAg
+                  ICAgICAgIyBCeSBlbmFibGluZyBhIGNhY2hlIChvZiB0eXBlICJzaGFyZWQgYmV0d2VlbiBhbGwg
+                  Tmdpbnggd29ya2VycyIpLCB3ZSB0ZWxsIHRoZSBjbGllbnQgdG8gcmUtdXNlIHRoZSBhbHJlYWR5
+                  IG5lZ290aWF0ZWQgc3RhdGUuCiAgICAgICAgIyBGdXJ0aGVyIG9wdGltaXphdGlvbiBjYW4gYmUg
+                  YWNoaWV2ZWQgYnkgcmFpc2luZyBrZWVwYWxpdmVfdGltZW91dCwgYnV0IHRoYXQgc2hvdWxkbid0
+                  IGJlIGRvbmUgdW5sZXNzIHlvdSBzZXJ2ZSBwcmltYXJpbHkgSFRUUFMuCiAgICAgICAgc3NsX3Nl
+                  c3Npb25fY2FjaGUgICAgc2hhcmVkOlNTTDoxMG07ICMgYSAxbWIgY2FjaGUgY2FuIGhvbGQgYWJv
+                  dXQgNDAwMCBzZXNzaW9ucywgc28gd2UgY2FuIGhvbGQgNDAwMDAgc2Vzc2lvbnMKICAgICAgICBz
+                  c2xfc2Vzc2lvbl90aW1lb3V0ICAyNGg7CgoKICAgICAgICAjIFVzZSBhIGhpZ2hlciBrZWVwYWxp
+                  dmUgdGltZW91dCB0byByZWR1Y2UgdGhlIG5lZWQgZm9yIHJlcGVhdGVkIGhhbmRzaGFrZXMKICAg
+                  ICAgICBrZWVwYWxpdmVfdGltZW91dCAzMDA7ICMgdXAgZnJvbSA3NSBzZWNzIGRlZmF1bHQKCiAg
+                  ICAgICAgIyByZW1lbWJlciB0aGUgY2VydGlmaWNhdGUgZm9yIGEgeWVhciBhbmQgYXV0b21hdGlj
+                  YWxseSBjb25uZWN0IHRvIEhUVFBTCiAgICAgICAgYWRkX2hlYWRlciBTdHJpY3QtVHJhbnNwb3J0
+                  LVNlY3VyaXR5ICdtYXgtYWdlPTMxNTM2MDAwOyBpbmNsdWRlU3ViRG9tYWlucyc7CgogICAgICAg
+                  IHNzbF9jZXJ0aWZpY2F0ZSAgICAgIC9ldGMvbmdpbngvc3NsLmNydDsKICAgICAgICBzc2xfY2Vy
+                  dGlmaWNhdGVfa2V5ICAvZXRjL25naW54L3NzbC5rZXk7CgogICAgICAgIGxvY2F0aW9uIC8gewog
+                  ICAgICAgICAgICBwcm94eV9zZXRfaGVhZGVyICAgWC1SZWFsLUlQICRyZW1vdGVfYWRkcjsKICAg
+                  ICAgICAgICAgcHJveHlfc2V0X2hlYWRlciAgIFgtRm9yd2FyZGVkLUZvciAkcHJveHlfYWRkX3hf
+                  Zm9yd2FyZGVkX2ZvcjsKICAgICAgICAgICAgcHJveHlfcGFzcyAgICAgICAgIGh0dHA6Ly9sb2Nh
+                  bGhvc3Q6MzAwMS87CiAgICAgICAgICAgIHByb3h5X2h0dHBfdmVyc2lvbiAxLjE7CiAgICAgICAg
+                  ICAgIHByb3h5X3NldF9oZWFkZXIgICBVcGdyYWRlICRodHRwX3VwZ3JhZGU7CiAgICAgICAgICAg
+                  IHByb3h5X3NldF9oZWFkZXIgICBDb25uZWN0aW9uICJ1cGdyYWRlIjsKICAgICAgICB9CiAgICB9
+                  Cn0K
+    name: nginx-config
+  - name: uptime-kuma
+    emptyDir: {}
+
+  ipAddress:
+    dnsNameLabel: uptime-kuma-monitor12
+    ports:
+    - port: 443
+      protocol: TCP
+    type: Public
+  osType: Linux
+tags: null
+type: Microsoft.ContainerInstance/containerGroups
