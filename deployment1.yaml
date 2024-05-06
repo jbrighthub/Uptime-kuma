@@ -34,9 +34,9 @@ properties:
   volumes:
   - name: nginx-config1
     azureFile:
-      sharename: fileshareforaci
-      storageAccountName: storageforaci1
-      storageAccountKey: es15CMggUMRwN5OiFqmGwqRG0PL/eFiuQ2POl7amj78eUj+UJIw8opRNvOro2q7e5ZLnNv8K1nI8+AStUArUxQ==
+      sharename: filesha2oraci
+      storageAccountName: stora3oraci1
+      storageAccountKey: es15CMggUMRwN5OiFqmGwqweFiuQ2POl7amj78eUj+UJIw8opRNvOro2q7e5ZLnNv8K1nufg+AStUArUxQ==
   - secret:
       ssl.crt: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSURFVENDQWZrQ0ZFME1wRjVxTTlHa1JDcVV4
                VFlrQytWaGM0Ti9NQTBHQ1NxR1NJYjNEUUVCQ3dVQU1FVXgKQ3pBSkJnTlZCQVlUQWtGVk1STXdF
